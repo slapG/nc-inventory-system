@@ -10,12 +10,18 @@ $(document).ready(function () {
                 dataSrc: ""
             },
             columns: [
-                { data: "id" },
+                {
+                    data: null,
+                    orderable: true,
+                    searchable: true,
+                    render: function (data, type, row) {
+                        return `<button class="btn btn-primary btn-sm edit-service-form" data-id="${row.id}">View</button>`;
+                    }
+                },
+                { data: "id" },                
                 { data: "user_id" },
                 { data: "user_pos" },
                 { data: "user_dept" },
-                { data: "photo" },
-                { data: "description" },
                 { data: "user_endorsed" },
                 { data: "user_enpos" },
                 { data: "status_id" },
@@ -29,14 +35,6 @@ $(document).ready(function () {
                 },
                 { data: "created" },
                 { data: "modified" },
-                {
-                    data: null,
-                    orderable: false,
-                    searchable: false,
-                    render: function (data, type, row) {
-                        return `<button class="btn btn-primary btn-sm edit-service-form" data-id="${row.id}">View</button>`;
-                    }
-                }
             ]
         });
 

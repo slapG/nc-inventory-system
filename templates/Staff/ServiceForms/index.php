@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>List of all Service Forms</h1>
+                <th><h1>List of all Service Forms</h1></th>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -26,22 +26,21 @@
                         <h3 class="card-title"></h3>
                     </div>
                     <div class="card-body">
-                        <table id="serviceFormsTable" class="table table-bordered table-hover table-responsive" style="width: 100%; height: 500px; white-space: nowrap;">
+                        <table id="serviceFormsTable" class="table table-sm table-bordered table-hover table-responsive" style="width: 100%; height: 500px; white-space: nowrap;">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Position</th>
                                     <th>Department</th>
-                                    <th>Photo</th>
-                                    <th>Description</th>
                                     <th>Endorsed By</th>
                                     <th>Position</th>
                                     <th>Status</th>
                                     <th>Active</th>
                                     <th>Created</th>
                                     <th>Modified</th>
-                                    <th>Actions</th>
+
                                 </tr>
                             </thead>
                             <tbody>

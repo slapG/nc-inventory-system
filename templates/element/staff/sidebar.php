@@ -56,14 +56,7 @@
             
          
           
-          <li class="nav-item">
-            <a href="<?= $this->Url->build(['prefix' => 'Employee', 'controller' => 'ServiceForms', 'action' => 'index']) ?>" class="nav-link">
-              <i class="nav-icon fas fa-pen"></i>
-              <p>
-                My Request
-              </p>
-            </a>
-          </li>
+
           <li class="nav-header">HISTORY</li>
           <li class="nav-item">
             <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Departments', 'action' => 'index']) ?>" class="nav-link">

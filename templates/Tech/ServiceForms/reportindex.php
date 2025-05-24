@@ -29,6 +29,7 @@
                         <table id="reportServiceFormsTable" class="table table-bordered table-hover table-responsive" style="width: 100%; height: 500px; white-space: nowrap;">
                             <thead>
                                 <tr>
+                                    <th>Actions</th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Position</th>
@@ -42,7 +43,7 @@
                                     <th>Actioned By</th>
                                     <th>Created</th>
                                     <th>Modified</th>
-                                    <th>Actions</th>
+
                                 </tr>
                             </thead>
                             <tbody>
