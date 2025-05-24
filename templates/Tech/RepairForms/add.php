@@ -98,7 +98,7 @@
                     </div>
                     <div class="form-group">
                         <?= $this->Form->control('user_dept', [
-                            'value' => $serviceForm->user_dept,
+                            'value' => $serviceForm->user_deptG,
                             'hidden' => true,
                             'label' => false,
                             ]); ?>
