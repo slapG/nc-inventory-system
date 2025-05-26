@@ -33,7 +33,7 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
         '/dist/css/adminlte.min.css',
         '/plugins/fontawesome-free/css/all.min.css',
         '/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
-        '/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'
+        '/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
         ]) ?>
 
     <?= $this->fetch('meta') ?>
@@ -52,6 +52,7 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
     '/plugins/jquery/jquery.min.js',
     'tech/service-forms.js',
     'tech/report-service-forms.js',
+    'tech/history-service-forms.js',
     '/plugins/bootstrap/js/bootstrap.bundle.min.js',
     '/dist/js/adminlte.min.js',
     '/plugins/datatables/jquery.dataTables.min.js',

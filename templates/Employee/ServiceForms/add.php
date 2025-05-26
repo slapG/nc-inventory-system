@@ -28,7 +28,7 @@
                 <h3 class="card-title">Fill up</h3>
               </div>
 
-                <?= $this->Form->create($serviceForm) ?>
+                <?= $this->Form->create($serviceForm, ['type' => 'file']) ?>
                     <div class="card-body">
     
                     <div class="form-group">
@@ -62,7 +62,9 @@
                             'label' => 'Photo',
                             'type' => 'file',
                             ]); ?>
+                            <img id="photoPreview" src="#" alt="Photo Preview" style="display:none; max-width:500px; margin-top:10px;" />
                     </div>
+                    
 
                     <div class="form-group">
                         <?= $this->Form->control('description', [

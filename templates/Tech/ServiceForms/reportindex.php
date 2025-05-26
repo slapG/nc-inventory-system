@@ -22,23 +22,18 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title"></h3>
-                    </div>
                     <div class="card-body">
-                        <table id="reportServiceFormsTable" class="table table-bordered table-hover table-responsive" style="width: 100%; height: 500px; white-space: nowrap;">
+                        <div class="table-responsive" style="white-space: nowrap;">
+                        <table id="reportServiceFormsTable" class="table table-bordered table-hover" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Position</th>
                                     <th>Department</th>
-                                    <th>Photo</th>
-                                    <th>Description</th>
                                     <th>Endorsed By</th>
                                     <th>Position</th>
                                     <th>Status</th>
-                                    <th>Active</th>
                                     <th>Actioned By</th>
                                     <th>Created</th>
                                     <th>Modified</th>

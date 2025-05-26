@@ -83,14 +83,27 @@ class ServiceFormsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
+
     public function add()
     {
         $serviceForm = $this->ServiceForms->newEmptyEntity();
         if ($this->request->is('post')) {
-            $serviceForm = $this->ServiceForms->patchEntity($serviceForm, $this->request->getData());
+            $data = $this->request->getData();
+
+            // Handle file upload
+            if (!empty($data['photo']) && $data['photo']->getError() === UPLOAD_ERR_OK) {
+                $file = $data['photo'];
+                $filename = time() . '_' . $file->getClientFilename();
+                $targetPath = WWW_ROOT . 'uploads' . DS . $filename;
+                $file->moveTo($targetPath);
+                $data['photo'] = 'uploads/' . $filename; // Save relative path or just filename
+            } else {
+                unset($data['photo']); // Or set to null if you want
+            }
+
+            $serviceForm = $this->ServiceForms->patchEntity($serviceForm, $data);
             if ($this->ServiceForms->save($serviceForm)) {
                 $this->Flash->success(__('The service form has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The service form could not be saved. Please, try again.'));

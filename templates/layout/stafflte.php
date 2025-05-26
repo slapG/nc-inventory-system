@@ -33,7 +33,7 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
         '/dist/css/adminlte.min.css',
         '/plugins/fontawesome-free/css/all.min.css',
         '/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
-        '/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'
+        '/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
         ]) ?>
 
     <?= $this->fetch('meta') ?>
@@ -51,12 +51,14 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
     <?= $this->Html->script([
     '/plugins/jquery/jquery.min.js',
     'staff/service-forms.js',
+    'staff/history-service-forms.js',
     '/plugins/bootstrap/js/bootstrap.bundle.min.js',
     '/dist/js/adminlte.min.js',
     '/plugins/datatables/jquery.dataTables.min.js',
     '/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js',
     '/plugins/datatables-responsive/js/dataTables.responsive.min.js',
     '/plugins/datatables-responsive/js/responsive.bootstrap4.min.js',
+    
     ],['defer' => true])?>
     <?= $this->fetch('script') ?>
 </body>

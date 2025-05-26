@@ -37,6 +37,7 @@ class ServiceFormsController extends AppController
     {
         $serviceForms = $this->ServiceForms->find('all', [
             'contain' => ['Users.Positions','Users.Departments', 'Statuses', 'EndorsedUser.Positions'],
+            'conditions' => ['ServiceForms.is_active' => true, 'ServiceForms.status_id' => 1], 
         ]);
         $data = [];
         foreach ($serviceForms as $serviceForm) {
@@ -50,7 +51,6 @@ class ServiceFormsController extends AppController
                 'user_endorsed' => $serviceForm->endorsed_user ? $serviceForm->endorsed_user->firstname . ' ' . $serviceForm->endorsed_user->middlename . ' ' . $serviceForm->endorsed_user->lastname : null,
                 'user_enpos' => $serviceForm->endorsed_user && $serviceForm->endorsed_user->position ? $serviceForm->endorsed_user->position->position_name : null,
                 'status_id' => $serviceForm->status ? $serviceForm->status->status : '',
-                "is_active" => $serviceForm->is_active,              
                 'created' => $serviceForm->created,
                 'modified' => $serviceForm->modified
             ];
@@ -58,6 +58,39 @@ class ServiceFormsController extends AppController
         return $this->response->withType('application/json')
             ->withStringBody(json_encode($data));
     }
+
+    public function serviceh()
+    {
+    }
+
+    public function getHistoryServiceForms() 
+    {
+        $serviceForms = $this->ServiceForms->find('all', [
+            'contain' => ['Users.Positions','Users.Departments', 'Statuses', 'EndorsedUser.Positions', 'ActionedUser'],
+            'conditions' => ['ServiceForms.user_actioned IS NOT'=> null, 'ServiceForms.status_id' => 5], 
+        ]);
+        $data = [];
+        foreach ($serviceForms as $serviceForm) {
+            $data[] = [
+                'id' => $serviceForm->id,
+                'user_id' => $serviceForm->user ? $serviceForm->user->firstname .' '. $serviceForm->user->middlename .' '. $serviceForm->user->lastname : '' ,
+                'user_pos' => $serviceForm->user && $serviceForm->user->position ? $serviceForm->user->position->position_name : '',
+                'user_dept' => $serviceForm->user && $serviceForm->user->department ? $serviceForm->user->department->department_name : '',
+                'photo' => $serviceForm->photo,
+                'description' => $serviceForm->description,
+                'user_endorsed' => $serviceForm->endorsed_user ? $serviceForm->endorsed_user->firstname . ' ' . $serviceForm->endorsed_user->middlename . ' ' . $serviceForm->endorsed_user->lastname : null,
+                'user_enpos' => $serviceForm->endorsed_user && $serviceForm->endorsed_user->position ? $serviceForm->endorsed_user->position->position_name : null,
+                'status_id' => $serviceForm->status ? $serviceForm->status->status : '',
+                'user_actioned' => $serviceForm->actioned_user ? $serviceForm->actioned_user->firstname . ' ' . $serviceForm->actioned_user->middlename . ' ' . $serviceForm->actioned_user->lastname : null,
+                'created' => $serviceForm->created,
+                'modified' => $serviceForm->modified
+            ];
+        }
+        return $this->response->withType('application/json')
+            ->withStringBody(json_encode($data));
+    }
+
+
 
     /**
      * View method
@@ -67,6 +100,16 @@ class ServiceFormsController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
+    {
+        $this->viewBuilder()->setLayout('ajax');
+        $serviceForm = $this->ServiceForms->get($id, [
+            'contain' => ['Users.Positions', 'Users.Departments', 'Statuses', 'User', 'EndorsedUser.Positions', 'RepairForms'],
+        ]);
+
+        $this->set(compact('serviceForm'));
+    }
+
+    public function print($id = null)
     {
         $this->viewBuilder()->setLayout('ajax');
         $serviceForm = $this->ServiceForms->get($id, [

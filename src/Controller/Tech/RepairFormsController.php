@@ -48,6 +48,23 @@ class RepairFormsController extends AppController
 
         $this->set(compact('repairForm'));
     }
+    public function getByServiceForm($serviceFormId = null)
+    {
+        $this->viewBuilder()->setLayout('ajax');
+        $repairForm = $this->RepairForms->find()
+            ->where(['service_form_id' => $serviceFormId])
+            ->contain(['ServiceForms', 'Items', 'Statuses'])
+            ->first();
+
+        if ($repairForm) {
+            $this->set(compact('repairForm'));
+            $this->render('view'); // reuse your existing view modal
+        } else {
+            $this->response = $this->response->withStatus(404);
+            $this->set('message', 'No repair form found.');
+            $this->render(null); // create an error view to handle this case
+        }
+    }
 
     /**
      * Add method
@@ -56,7 +73,6 @@ class RepairFormsController extends AppController
      */
     public function add($id = null)
     {
-        $this->viewBuilder()->setLayout('default');
         if ($id !== null) {
         $serviceForm = $this->RepairForms->ServiceForms->get($id);
         }
@@ -64,8 +80,11 @@ class RepairFormsController extends AppController
         if ($this->request->is('post')) {
             $repairForm = $this->RepairForms->patchEntity($repairForm, $this->request->getData());
             if ($this->RepairForms->save($repairForm)) {
-                $this->Flash->success(__('The repair form has been saved.'));
 
+                if (isset($serviceForm)) {
+                    $serviceForm->status_id = 5;
+                    $this->RepairForms->ServiceForms->save($serviceForm);
+                }
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The repair form could not be saved. Please, try again.'));

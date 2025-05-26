@@ -108,5 +108,15 @@ class CreateUsersTable extends AbstractMigration
             ->addForeignKey('inspected_by', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
             ->addForeignKey('status_id', 'statuses', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
             ->create();
+
+        $table = $this->table('profile');
+        $table->addColumn('user_id', 'integer')
+            ->addColumn('photo', 'string')
+            ->addColumn('address', 'text')
+            ->addColumn('contact_no', 'text')
+            ->addColumn('created', 'datetime')
+            ->addColumn('modified', 'datetime')
+            ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+            ->create();
     }
 }

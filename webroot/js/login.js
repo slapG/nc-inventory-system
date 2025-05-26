@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Swal.fire({
           icon: 'success',
           title: data.message,
-          timer: 500,
+          timer: 1000,
           showConfirmButton: false,
         }).then(() => {
           window.location.href = data.redirect;

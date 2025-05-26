@@ -1,33 +1,70 @@
-$(document).ready(function(){
-    console.log('items.js loaded');
-    $('#serviceFormsTable').DataTable({
-        processing: true,
-        serverSide: false, 
-        ajax: {
-            url: "/nc-inventory-system/employee/serviceForms/getServiceForms",
-            type: "GET",
-            dataSrc: "" 
-        },
-        columns: [
+$(document).ready(function () {
+    if (!$.fn.DataTable.isDataTable('#serviceFormsTable')) {
+        console.log('items.js loaded');
+        let table = $('#serviceFormsTable').DataTable({
+            scrollX: true,
+            pagelength: 20,
+            lengthMenu: [20, 50, 100, 500],
+            processing: false,
+            serverSide: false,
+            ajax: {
+                url: "/nc-inventory-system/employee/serviceForms/getServiceForms",
+                type: "GET",
+                dataSrc: ""
+            },
+            columns: [
             { data: "id" },
-            { data: "user_id" },
+            { 
+                    data: "user_id",
+                    render: function(data) {
+                        return data ? `<strong>${String(data).toUpperCase()}</strong>` : '';
+                    }
+                },
             { data: "user_pos" }, 
             { data: "user_dept" },
-            { data: "photo" },
-            { data: "description" },
-            { data: "user_endorsed" },
+
+            { 
+                    data: "user_endorsed",
+                    render: function(data) {
+                        return data ? `<strong>${String(data).toUpperCase()}</strong>` : '';
+                    }
+                },
             { data: "user_enpos" },
-            { data: "status_id" },
             {
-                data: "is_active",
-                render: function(data, type, row) {
-                    return data === "1"
-                        ? '<span class="badge badge-success">Active</span>'
-                        : '<span class="badge badge-secondary">Inactive</span>';
-                }
-            },
-            { data: "created" },
-            { data: "modified" },
+                    data: "status_id",
+                    render: function(data) {
+                        if (data === 'APPROVED') return '<span class="badge bg-success">APPROVED</span>';
+                        if (data === 'PENDING') return '<span class="badge bg-warning text-dark">PENDING</span>';
+                        if (data === 'REJECTED') return '<span class="badge bg-danger">Rejected</span>';
+                        if (data === 'ACCOMPLISHED') return '<span class="badge bg-success">Accomplished</span>';
+                        if (data === 'processing') return '<span class="badge bg-info">PROCESSING</span>';
+                  
+                    },
+
+                },
+
+                            {
+                    data: "created",
+                    title: "Created",
+                    render: function (data) {
+                        const date = new Date(data);
+                        return date.toLocaleDateString("en-US") + " | " + date.toLocaleTimeString("en-US", {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                        });
+                    }
+                },
+                {
+                    data: "modified",
+                    title: "Modified",
+                    render: function (data) {
+                        const date = new Date(data);
+                        return date.toLocaleDateString("en-US") + " | " + date.toLocaleTimeString("en-US", {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                        });
+                    }
+                },
             {
                 data: null,
                 orderable: false,
@@ -40,5 +77,23 @@ $(document).ready(function(){
                 }
             }
         ]
-    });
+        });
+
+        setInterval(function () {
+            table.ajax.reload(null, false); 
+        }, 5000);
+    }
+});
+
+
+document.getElementById('InputFile').addEventListener('change', function(event) {
+    const [file] = event.target.files;
+    const preview = document.getElementById('photoPreview');
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+    } else {
+        preview.src = '#';
+        preview.style.display = 'none';
+    }
 });

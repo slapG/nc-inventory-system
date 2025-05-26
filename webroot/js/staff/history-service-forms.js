@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    if (!$.fn.DataTable.isDataTable('#serviceFormsTable')) {
+    if (!$.fn.DataTable.isDataTable('#historyServiceFormsTable')) {
         console.log('items.js loaded');
-        let table = $('#serviceFormsTable').DataTable({
+        let table = $('#historyServiceFormsTable').DataTable({
             scrollX: true,
             pagelength: 20,
             lengthMenu: [20, 50, 100, 500],
             processing: false,
             serverSide: false,
             ajax: {
-                url: "/nc-inventory-system/tech/serviceForms/getServiceForms",
+                url: "/nc-inventory-system/staff/service-forms/getHistoryServiceForms",
                 type: "GET",
                 dataSrc: ""
             },
@@ -22,7 +22,6 @@ $(document).ready(function () {
                 },
                 { data: "user_pos" },
                 { data: "user_dept" },
-
                 { 
                     data: "user_endorsed",
                     render: function(data) {
@@ -34,7 +33,14 @@ $(document).ready(function () {
                     data: "status_id",
                     render: function(data) {
                         if (data === 'ACCOMPLISHED') return '<span class="badge bg-success">ACCOMPLIHSED</span>';
-                        if (data === 'APPROVED') return '<span class="badge bg-success text-dark">APPROVED</span>';
+                        if (data === 'PENDING') return '<span class="badge bg-warning text-dark">Pending</span>';
+                        return '<span class="badge bg-secondary">' + data + '</span>';
+                    }
+                },
+                { 
+                    data: "user_actioned",
+                    render: function(data) {
+                        return data ? `<strong>${String(data).toUpperCase()}</strong>` : '';
                     }
                 },
                 {
@@ -59,12 +65,14 @@ $(document).ready(function () {
                         });
                     }
                 },
+
                 {
                     data: null,
                     orderable: false,
                     searchable: false,
+                    className: "text-center",
                     render: function (data, type, row) {
-                        return `<button class="btn btn-primary btn-sm edit-service-form" data-id="${row.id}">View</button>`;
+                        return `<button class="btn btn-outline-primary btn-sm p-1 print-service-form" data-id="${row.id}">VIEW</button>`;
                     }
                 }
             ]
@@ -77,37 +85,11 @@ $(document).ready(function () {
 });
 
 
-$(document).on('click', '.edit-service-form', function () {
+$(document).on('click', '.print-service-form', function () {
     var id = $(this).data('id');
-    $('#serviceFormViewModal').remove();
-    $.get(`/nc-inventory-system/tech/serviceForms/view/${id}`, function (data) {
+    $('#printServiceFormViewModal').remove();
+    $.get(`/nc-inventory-system/staff/serviceForms/print/${id}`, function (data) {
         $('body').append(data);
-        $('#serviceFormViewModal').modal('show');
-    });
-});
-
-$(document).on('click', '#approveServiceFormBtn', function () {
-    var id = $(this).data('id');
-    var csrfToken = $('meta[name="csrfToken"]').attr('content');
-
-    $.ajax({
-        url: `/nc-inventory-system/tech/serviceForms/approve/${id}`,
-        method: 'POST',
-        headers: {
-            'X-CSRF-Token': csrfToken 
-        },
-        dataType: 'json',
-        success: function (data) {
-            if (data.status === 'success') {
-                alert('Approved!');
-                $('#serviceFormViewModal').modal('hide');
-                $('#serviceFormsTable').DataTable().ajax.reload();
-            } else {
-                alert(data.message || 'Approval failed.');
-            }
-        },
-        error: function (xhr, status, error) {
-            alert('Error: ' + (xhr.responseJSON?.message || error));
-        }
+        $('#printServiceFormViewModal').modal('show');
     });
 });

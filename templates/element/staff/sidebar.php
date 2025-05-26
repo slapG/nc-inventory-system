@@ -35,41 +35,33 @@
           <li class="nav-header">REQUEST</li>
 
           
-              <li class="nav-item">
-                <a href="<?= $this->Url->build(['prefix' => 'Employee', 'controller' => 'ServiceForms', 'action' => 'add']) ?>" class="nav-link">
+              <li class="nav-item item-gradient-hover">
+                <a href="<?= $this->Url->build(['prefix' => 'Staff', 'controller' => 'ServiceForms', 'action' => 'index']) ?>" class="nav-link">
                   <i class="nav-icon fas fa-tools"></i>
-                  <p>Request Service</p>
+                  <p>Service</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item item-gradient-hover">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-toolbox"></i>
-                  <p>Request Item</p>
+                  <p>Item</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="../../index3.html" class="nav-link">
+
+              <li class="nav-item item-gradient-hover">
+                <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-vest"></i>
-                  <p>Request Equipment</p>
+                  <p>Equipment</p>
                 </a>
               </li>
             
-         
-          
-          <li class="nav-item">
-            <a href="<?= $this->Url->build(['prefix' => 'Employee', 'controller' => 'ServiceForms', 'action' => 'index']) ?>" class="nav-link">
-              <i class="nav-icon fas fa-pen"></i>
-              <p>
-                My Request
-              </p>
-            </a>
-          </li>
+
           <li class="nav-header">HISTORY</li>
-          <li class="nav-item">
-            <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Departments', 'action' => 'index']) ?>" class="nav-link">
+          <li class="nav-item item-gradient-hover">
+            <a href="<?= $this->Url->build(['prefix' => 'Staff', 'controller' => 'ServiceForms', 'action' => 'serviceh']) ?>" class="nav-link">
               <i class="nav-icon fas fa-book-open"></i>
               <p>
-                View
+                Service
               </p>
             </a>
           </li>
@@ -77,7 +69,7 @@
           
           
           <li class="nav-header">USER COMMAND</li>
-          <li class="nav-item">
+          <li class="nav-item item-gradient-hover">
             <a href="<?= $this->Url->build(['prefix' => false, 'controller' => 'Users', 'action' => 'logout']) ?>" class="nav-link">
               <i class="fas fa-sign-out-alt nav-icon"></i>
               <p>Logout</p>

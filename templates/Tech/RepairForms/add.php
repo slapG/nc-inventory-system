@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Create Service Form</h1>
+                <h1>BREAKDOWN/REPAIR REPORT</h1>
             </div>
             <div class="col-sm-6">
 
@@ -120,14 +120,16 @@
                     <div class="form-group">
                         <?= $this->Form->control('status_id', [
                             'options' => $statuses,
-                            'hidden' => false,
+                            'value' => 5,
+                            'hidden' => true,
                             'label' => false
                             ]); ?>
                     </div>
 
                     <div class="form-group">
                         <?= $this->Form->control('is_active', [
-                            'hidden' => false,
+                            'value' => 1,
+                            'hidden' => true,
                             'label' => false
                             ]); ?>
                     </div>

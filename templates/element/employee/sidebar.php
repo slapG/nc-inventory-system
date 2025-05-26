@@ -36,40 +36,50 @@
 
           
               <li class="nav-item">
-                <a href="<?= $this->Url->build(['prefix' => 'Employee', 'controller' => 'ServiceForms', 'action' => 'add']) ?>" class="nav-link">
+                <a href="<?= $this->Url->build(['prefix' => 'Employee', 'controller' => 'ServiceForms', 'action' => 'index']) ?>" class="nav-link">
                   <i class="nav-icon fas fa-tools"></i>
-                  <p>Request Service</p>
+                  <p>Service</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-toolbox"></i>
-                  <p>Request Item</p>
+                  <p>Item</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../../index3.html" class="nav-link">
                   <i class="nav-icon fas fa-vest"></i>
-                  <p>Request Equipment</p>
+                  <p>Equipment</p>
                 </a>
               </li>
             
          
           
           <li class="nav-item">
-            <a href="<?= $this->Url->build(['prefix' => 'Employee', 'controller' => 'ServiceForms', 'action' => 'index']) ?>" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-pen"></i>
               <p>
                 My Request
               </p>
             </a>
           </li>
+          <li class="nav-header">User</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Profile
+              </p>
+            </a>
+          </li>
+          
           <li class="nav-header">HISTORY</li>
           <li class="nav-item">
-            <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Departments', 'action' => 'index']) ?>" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book-open"></i>
               <p>
-                View
+                Service
               </p>
             </a>
           </li>

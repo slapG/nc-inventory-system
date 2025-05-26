@@ -27,7 +27,16 @@
                 <tr><th><?= __('Department') ?></th>
                   <td><?= $serviceForm->has('user') && $serviceForm->user->has('department') ? $serviceForm->user->department->department_name : '-' ?></td>
                 </tr>
-                <tr><th><?= __('Photo') ?></th><td><?= h($serviceForm->photo) ?></td></tr>
+                <tr>
+                  <th><?= __('Photo') ?></th>
+                  <td>
+                      <?php if ($serviceForm->photo): ?>
+                          <img src="/nc-inventory-system/<?= h($serviceForm->photo) ?>" alt="Photo" style="max-width: 500px; max-height: 500px;">
+                      <?php else: ?>
+                          -
+                      <?php endif; ?>
+                  </td>
+              </tr>
                 <tr><th><?= __('Description') ?></th><td><?= h($serviceForm->description) ?></td></tr>
                 <tr><th><?= __('Endorsed By') ?></th>
                   <td><?= $serviceForm->has('endorsed_user') ? $serviceForm->endorsed_user->email : '-' ?></td>

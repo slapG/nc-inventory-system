@@ -74,7 +74,7 @@ class ServiceFormsTable extends Table
             'propertyName' => 'actioned_user'
         ]);
         
-        $this->hasMany('RepairForms', [
+        $this->hasOne('RepairForms', [
             'foreignKey' => 'service_form_id',
         ]);
     }

@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\ServiceForm $serviceForm
  */
 ?>
-<div class="modal fade" id="serviceFormViewModal" tabindex="-1" role="dialog" aria-labelledby="serviceFormViewModalLabel" aria-hidden="true">
+<div class="modal fade" id="printServiceFormViewModal" tabindex="-1" role="dialog" aria-labelledby="serviceFormViewModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header bg-info">
@@ -13,7 +13,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="printableContent">
         <div class="card card-info mb-0">
           <div class="card-body table-responsive p-0">
             <table class="table table-hover table-sm">
@@ -57,9 +57,22 @@
       </div>
       <div class="modal-footer bg-white">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="approveServiceFormBtn" data-id="<?= h($serviceForm->id) ?>">Approve</button>
-        <button type="button" class="btn btn-danger" id="rejectServiceFormBtn" data-id="<?= h($serviceForm->id) ?>">Reject</button>
+        <button type="button" class="btn btn-primary" id="aprintServiceFormBtn" ">Print</button>
       </div>
     </div>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+document.getElementById('aprintServiceFormBtn').addEventListener('click', function () {
+  const element = document.getElementById('printableContent');
+  const opt = {
+    margin:       0.3,
+    filename:     'service_form_<?= h($serviceForm->id) ?>.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+  html2pdf().set(opt).from(element).save();
+});
+</script>

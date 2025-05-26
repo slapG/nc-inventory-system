@@ -1,0 +1,6 @@
+.item-gradient-hover:hover {
+    background: linear-gradient(90deg, hsl(188, 78%, 41%), #6610f2) !important;
+    color: #fff !important;
+    border-radius: 1rem !important; /* Adjust the value for more or less roundness */
+
+}

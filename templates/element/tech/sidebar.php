@@ -32,25 +32,25 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-header">VIEW</li>
+          <li class="nav-header">REQUEST</li>
 
           
               <li class="nav-item">
                 <a href="<?= $this->Url->build(['prefix' => 'Tech', 'controller' => 'ServiceForms', 'action' => 'index']) ?>" class="nav-link">
                   <i class="nav-icon fas fa-tools"></i>
-                  <p>Request Service</p>
+                  <p>Service</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-toolbox"></i>
-                  <p>Request Item</p>
+                  <p>Item</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="../../index3.html" class="nav-link">
                   <i class="nav-icon fas fa-vest"></i>
-                  <p>Request Equipment</p>
+                  <p>Equipment</p>
                 </a>
               </li>
             
@@ -59,21 +59,19 @@
             <a href="<?= $this->Url->build(['prefix' => 'Tech', 'controller' => 'ServiceForms', 'action' => 'reportindex']) ?>" class="nav-link">
               <i class="nav-icon fas fa-file-invoice"></i>
               <p>
-                Service Report
+                Service
               </p>
             </a>
         
           <li class="nav-header">HISTORY</li>
           <li class="nav-item">
-            <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Departments', 'action' => 'index']) ?>" class="nav-link">
+            <a href="<?= $this->Url->build(['prefix' => 'Tech', 'controller' => 'ServiceForms', 'action' => 'serviceh']) ?>" class="nav-link">
               <i class="nav-icon fas fa-book-open"></i>
               <p>
-                View
+                Service
               </p>
             </a>
           </li>
-          
-          
           
           <li class="nav-header">USER COMMAND</li>
           <li class="nav-item">

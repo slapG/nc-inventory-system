@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    if (!$.fn.DataTable.isDataTable('#serviceFormsTable')) {
+    if (!$.fn.DataTable.isDataTable('#historyServiceFormsTable')) {
         console.log('items.js loaded');
-        let table = $('#serviceFormsTable').DataTable({
+        let table = $('#historyServiceFormsTable').DataTable({
             scrollX: true,
             pagelength: 20,
             lengthMenu: [20, 50, 100, 500],
             processing: false,
             serverSide: false,
             ajax: {
-                url: "/nc-inventory-system/tech/serviceForms/getServiceForms",
+                url: "/nc-inventory-system/tech/service-forms/getHistoryServiceForms",
                 type: "GET",
                 dataSrc: ""
             },
@@ -22,7 +22,6 @@ $(document).ready(function () {
                 },
                 { data: "user_pos" },
                 { data: "user_dept" },
-
                 { 
                     data: "user_endorsed",
                     render: function(data) {
@@ -33,8 +32,17 @@ $(document).ready(function () {
                 {
                     data: "status_id",
                     render: function(data) {
-                        if (data === 'ACCOMPLISHED') return '<span class="badge bg-success">ACCOMPLIHSED</span>';
-                        if (data === 'APPROVED') return '<span class="badge bg-success text-dark">APPROVED</span>';
+                        if (data === 'APPROVED') return '<span class="badge bg-success">APPROVED</span>';
+                        if (data === 'PENDING') return '<span class="badge bg-warning text-dark">PENDING</span>';
+                        if (data === 'REJECTED') return '<span class="badge bg-danger">Rejected</span>';
+                        if (data === 'ACCOMPLISHED') return '<span class="badge bg-success">Accomplished</span>';
+                        if (data === 'processing') return '<span class="badge bg-info">PROCESSING</span>';
+                    }
+                },
+                { 
+                    data: "user_actioned",
+                    render: function(data) {
+                        return data ? `<strong>${String(data).toUpperCase()}</strong>` : '';
                     }
                 },
                 {
@@ -59,12 +67,15 @@ $(document).ready(function () {
                         });
                     }
                 },
+
                 {
                     data: null,
                     orderable: false,
                     searchable: false,
+                    className: "text-center",
                     render: function (data, type, row) {
-                        return `<button class="btn btn-primary btn-sm edit-service-form" data-id="${row.id}">View</button>`;
+                        return `<button class="btn btn-outline-primary btn-sm p-1 edit-service-form" data-id="${row.id}">Request</button>
+                        <button class="btn btn-outline-primary btn-sm p-1 view-service-form" data-id="${row.id}">Report</button>`;
                     }
                 }
             ]
@@ -76,6 +87,19 @@ $(document).ready(function () {
     }
 });
 
+$(document).on('click', '.view-service-form', function () {
+    var serviceFormId = $(this).data('id');
+    $('#repairFormViewModal').remove();
+    $.get(`/nc-inventory-system/tech/repairForms/getByServiceForm/${serviceFormId}`, function (data) {
+        if (data) {
+            $('body').append(data);
+            $('#repairFormViewModal').modal('show');
+        } else {
+            alert('No repair form found for this service form.');
+        }
+    });
+});
+
 
 $(document).on('click', '.edit-service-form', function () {
     var id = $(this).data('id');
@@ -85,6 +109,7 @@ $(document).on('click', '.edit-service-form', function () {
         $('#serviceFormViewModal').modal('show');
     });
 });
+
 
 $(document).on('click', '#approveServiceFormBtn', function () {
     var id = $(this).data('id');
