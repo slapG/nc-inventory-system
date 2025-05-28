@@ -13,7 +13,7 @@ use App\Controller\AppController;
  */
 class ItemsController extends AppController
 {
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
     {
         $this->viewBuilder()->setLayout('techlte');
     }
@@ -25,7 +25,7 @@ class ItemsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users'],
+            'contain' => ['Users', 'Statuses', 'AddedUser', 'ModifiedUser'],
         ];
         $items = $this->paginate($this->Items);
 
@@ -42,7 +42,7 @@ class ItemsController extends AppController
     public function view($id = null)
     {
         $item = $this->Items->get($id, [
-            'contain' => ['Users', 'RepairForms'],
+            'contain' => ['Users', 'Statuses', 'FeedbackForms', 'RepairForms'],
         ]);
 
         $this->set(compact('item'));
@@ -66,7 +66,8 @@ class ItemsController extends AppController
             $this->Flash->error(__('The item could not be saved. Please, try again.'));
         }
         $users = $this->Items->Users->find('list', ['limit' => 200])->all();
-        $this->set(compact('item', 'users'));
+        $statuses = $this->Items->Statuses->find('list', ['limit' => 200])->all();
+        $this->set(compact('item', 'users', 'statuses'));
     }
 
     /**
@@ -91,7 +92,8 @@ class ItemsController extends AppController
             $this->Flash->error(__('The item could not be saved. Please, try again.'));
         }
         $users = $this->Items->Users->find('list', ['limit' => 200])->all();
-        $this->set(compact('item', 'users'));
+        $statuses = $this->Items->Statuses->find('list', ['limit' => 200])->all();
+        $this->set(compact('item', 'users', 'statuses'));
     }
 
     /**

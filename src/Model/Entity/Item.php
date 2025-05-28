@@ -13,8 +13,11 @@ use Cake\ORM\Entity;
  * @property string $code
  * @property string $quantity
  * @property \Cake\I18n\FrozenDate $purchase_date
+ * @property \Cake\I18n\FrozenDate $acquire_date
+ * @property string $type
  * @property string $count
  * @property string $is_active
+ * @property int $status_id
  * @property int|null $user_id
  * @property int|null $user_added
  * @property int|null $user_modified
@@ -40,6 +43,8 @@ class Item extends Entity
         'code' => true,
         'quantity' => true,
         'purchase_date' => true,
+        'acquire_date' => true,
+        'type' => true,
         'count' => true,
         'is_active' => true,
         'user_id' => true,
@@ -49,5 +54,6 @@ class Item extends Entity
         'modified' => true,
         'user' => true,
         'repair_forms' => true,
+        'status_id' => true,
     ];
 }

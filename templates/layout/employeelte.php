@@ -26,6 +26,7 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
+    <?= $this->Html->meta('csrfToken', $this->request->getAttribute('csrfToken')); ?>
     <?= $this->Html->css([
         'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback',
         '/dist/css/adminlte.min.css',
@@ -37,10 +38,9 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition layout-top-nav">
     <div class="wrapper">
         <?= $this->element('employee/navbar') ?>
-        <?= $this->element('employee/sidebar') ?>
         <div class="content-wrapper">
             <?= $this->fetch('content') ?>
         </div>

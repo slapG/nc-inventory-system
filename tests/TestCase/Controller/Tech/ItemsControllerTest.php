@@ -24,6 +24,8 @@ class ItemsControllerTest extends TestCase
     protected $fixtures = [
         'app.Items',
         'app.Users',
+        'app.Statuses',
+        'app.FeedbackForms',
         'app.RepairForms',
     ];
 

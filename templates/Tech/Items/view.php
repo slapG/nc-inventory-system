@@ -19,8 +19,12 @@
             <h3><?= h($item->id) ?></h3>
             <table>
                 <tr>
+                    <th><?= __('Status') ?></th>
+                    <td><?= $item->has('status') ? $this->Html->link($item->status->status, ['controller' => 'Statuses', 'action' => 'view', $item->status->id]) : '' ?></td>
+                </tr>
+                <tr>
                     <th><?= __('User') ?></th>
-                    <td><?= $item->has('user') ? $this->Html->link($item->user->email, ['controller' => 'Users', 'action' => 'view', $item->user->id]) : '' ?></td>
+                    <td><?= $item->has('user') ? $this->Html->link($item->user->id_number, ['controller' => 'Users', 'action' => 'view', $item->user->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
@@ -37,6 +41,10 @@
                 <tr>
                     <th><?= __('Purchase Date') ?></th>
                     <td><?= h($item->purchase_date) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Acquire Date') ?></th>
+                    <td><?= h($item->acquire_date) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Created') ?></th>
@@ -66,6 +74,12 @@
                 </blockquote>
             </div>
             <div class="text">
+                <strong><?= __('Type') ?></strong>
+                <blockquote>
+                    <?= $this->Text->autoParagraph(h($item->type)); ?>
+                </blockquote>
+            </div>
+            <div class="text">
                 <strong><?= __('Count') ?></strong>
                 <blockquote>
                     <?= $this->Text->autoParagraph(h($item->count)); ?>
@@ -76,6 +90,57 @@
                 <blockquote>
                     <?= $this->Text->autoParagraph(h($item->is_active)); ?>
                 </blockquote>
+            </div>
+            <div class="related">
+                <h4><?= __('Related Feedback Forms') ?></h4>
+                <?php if (!empty($item->feedback_forms)) : ?>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th><?= __('Id') ?></th>
+                            <th><?= __('User Id') ?></th>
+                            <th><?= __('User Pos') ?></th>
+                            <th><?= __('User Dept') ?></th>
+                            <th><?= __('Description') ?></th>
+                            <th><?= __('User Endorsed') ?></th>
+                            <th><?= __('User Enpos') ?></th>
+                            <th><?= __('Status') ?></th>
+                            <th><?= __('Is Active') ?></th>
+                            <th><?= __('User Actioned') ?></th>
+                            <th><?= __('Repair Form Id') ?></th>
+                            <th><?= __('Service Form Id') ?></th>
+                            <th><?= __('Item Id') ?></th>
+                            <th><?= __('Created') ?></th>
+                            <th><?= __('Modified') ?></th>
+                            <th class="actions"><?= __('Actions') ?></th>
+                        </tr>
+                        <?php foreach ($item->feedback_forms as $feedbackForms) : ?>
+                        <tr>
+                            <td><?= h($feedbackForms->id) ?></td>
+                            <td><?= h($feedbackForms->user_id) ?></td>
+                            <td><?= h($feedbackForms->user_pos) ?></td>
+                            <td><?= h($feedbackForms->user_dept) ?></td>
+                            <td><?= h($feedbackForms->description) ?></td>
+                            <td><?= h($feedbackForms->user_endorsed) ?></td>
+                            <td><?= h($feedbackForms->user_enpos) ?></td>
+                            <td><?= h($feedbackForms->status) ?></td>
+                            <td><?= h($feedbackForms->is_active) ?></td>
+                            <td><?= h($feedbackForms->user_actioned) ?></td>
+                            <td><?= h($feedbackForms->repair_form_id) ?></td>
+                            <td><?= h($feedbackForms->service_form_id) ?></td>
+                            <td><?= h($feedbackForms->item_id) ?></td>
+                            <td><?= h($feedbackForms->created) ?></td>
+                            <td><?= h($feedbackForms->modified) ?></td>
+                            <td class="actions">
+                                <?= $this->Html->link(__('View'), ['controller' => 'FeedbackForms', 'action' => 'view', $feedbackForms->id]) ?>
+                                <?= $this->Html->link(__('Edit'), ['controller' => 'FeedbackForms', 'action' => 'edit', $feedbackForms->id]) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'FeedbackForms', 'action' => 'delete', $feedbackForms->id], ['confirm' => __('Are you sure you want to delete # {0}?', $feedbackForms->id)]) ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <?php endif; ?>
             </div>
             <div class="related">
                 <h4><?= __('Related Repair Forms') ?></h4>
@@ -116,7 +181,7 @@
                             <td><?= h($repairForms->is_active) ?></td>
                             <td><?= h($repairForms->status_id) ?></td>
                             <td><?= h($repairForms->created) ?></td>
-                            <td><?= h($repairForms->modified) ?></td>
+                            <td><?= h($repairForms->modif ied) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'RepairForms', 'action' => 'view', $repairForms->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'RepairForms', 'action' => 'edit', $repairForms->id]) ?>

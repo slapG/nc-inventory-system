@@ -51,6 +51,19 @@ class ItemsTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
         ]);
+        $this->belongsTo('AddedUser', [
+            'className' => 'Users',
+            'foreignKey' => 'user_added',
+            'propertyName' => 'added_user'
+        ]);
+        $this->belongsTo('ModifiedUser', [
+            'className' => 'Users',
+            'foreignKey' => 'user_modified',
+            'propertyName' => 'modified_user'
+        ]);
+        $this->belongsTo('Statuses', [
+            'foreignKey' => 'status_id',
+        ]);
         $this->hasMany('FeedbackForms', [
             'foreignKey' => 'item_id',
         ]);
@@ -86,7 +99,17 @@ class ItemsTable extends Table
         $validator
             ->date('purchase_date')
             ->requirePresence('purchase_date', 'create')
-            ->notEmptyDate('purchase_date');
+            ->allowEmptyDate('purchase_date');
+
+        $validator
+            ->date('acquire_date')
+            ->requirePresence('acquire_date', 'create')
+            ->allowEmptyDate('acquire_date');
+
+        $validator
+            ->scalar('type')
+            ->requirePresence('type', 'create')
+            ->notEmptyString('type');
 
         $validator
             ->scalar('count')
@@ -97,6 +120,10 @@ class ItemsTable extends Table
             ->scalar('is_active')
             ->requirePresence('is_active', 'create')
             ->notEmptyString('is_active');
+
+        $validator
+            ->integer('status_id')
+            ->notEmptyString('status_id');
 
         $validator
             ->integer('user_id')
@@ -124,6 +151,7 @@ class ItemsTable extends Table
     {
         $rules->add($rules->isUnique(['code']), ['errorField' => 'code']);
         $rules->add($rules->existsIn('user_id', 'Users'), ['errorField' => 'user_id']);
+        $rules->add($rules->existsIn('status_id', 'Statuses'), ['errorField' => 'status_id']);
 
         return $rules;
     }

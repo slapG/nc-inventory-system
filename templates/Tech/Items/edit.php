@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Item $item
  * @var string[]|\Cake\Collection\CollectionInterface $users
+ * @var string[]|\Cake\Collection\CollectionInterface $statuses
  */
 ?>
 <div class="row">
@@ -27,8 +28,11 @@
                     echo $this->Form->control('code');
                     echo $this->Form->control('quantity');
                     echo $this->Form->control('purchase_date');
+                    echo $this->Form->control('acquire_date', ['empty' => true]);
+                    echo $this->Form->control('type');
                     echo $this->Form->control('count');
                     echo $this->Form->control('is_active');
+                    echo $this->Form->control('status_id', ['options' => $statuses]);
                     echo $this->Form->control('user_id', ['options' => $users, 'empty' => true]);
                     echo $this->Form->control('user_added');
                     echo $this->Form->control('user_modified');
