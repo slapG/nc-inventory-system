@@ -147,7 +147,7 @@ class UsersController extends AppController
                 $redirectUrl = Router::url([
                     'prefix' => 'Staff',
                     'controller' => 'serviceForms',
-                    'action' => 'index',
+                    'action' => 'blank',
                 ]);
                 return $this->response->withType('application/json')
                     ->withStringBody(json_encode([
@@ -174,7 +174,7 @@ class UsersController extends AppController
                 $redirectUrl = Router::url([
                     'prefix' => 'Tech',
                     'controller' => 'serviceForms',
-                    'action' => 'index',
+                    'action' => 'blank',
                 ]);
                 return $this->response->withType('application/json')
                     ->withStringBody(json_encode([

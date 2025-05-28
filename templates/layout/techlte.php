@@ -39,10 +39,9 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition layout-top-nav">
     <div class="wrapper">
         <?= $this->element('tech/navbar') ?>
-        <?= $this->element('tech/sidebar') ?>
         <div class="content-wrapper">
             <?= $this->fetch('content') ?>
         </div>

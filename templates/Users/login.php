@@ -14,10 +14,10 @@ style="height: 100vh; background-image: url('<?= $this->Url->assetUrl('#') ?>');
         <?= $this->Form->create(null, ['id' => 'login-form'])?>
       
         <div class="input-group mb-3">
-            <?= $this->Form->text('email', [
+            <?= $this->Form->text('id_number', [
                 'class' => 'form-control', 
-                'placeholder' => 'Enter Email', 
-                'id' => 'email', 
+                'placeholder' => 'Enter ID Number', 
+                'id' => 'id_number', 
                 'required' => true
             ]); ?>
             <div class="input-group-append">

@@ -101,11 +101,6 @@ class ServiceFormsTable extends Table
             ->requirePresence('user_dept', 'create')
             ->notEmptyString('user_dept');
 
-        $validator
-            ->scalar('photo')
-            ->maxLength('photo', 255)
-            ->requirePresence('photo', 'create')
-            ->notEmptyString('photo');
 
         $validator
             ->scalar('description')

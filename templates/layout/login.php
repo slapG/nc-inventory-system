@@ -42,8 +42,9 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
 </head>
 
 
-<body>
+<body class="hold-transition layout-top-nav">
     <main class="main">
+        <?= $this->element('login/navbar')?>            
         <div class="container">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>

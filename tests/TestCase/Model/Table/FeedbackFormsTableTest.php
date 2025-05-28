@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\UsersTable;
+use App\Model\Table\FeedbackFormsTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\UsersTable Test Case
+ * App\Model\Table\FeedbackFormsTable Test Case
  */
-class UsersTableTest extends TestCase
+class FeedbackFormsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UsersTable
+     * @var \App\Model\Table\FeedbackFormsTable
      */
-    protected $Users;
+    protected $FeedbackForms;
 
     /**
      * Fixtures
@@ -24,12 +24,11 @@ class UsersTableTest extends TestCase
      * @var array<string>
      */
     protected $fixtures = [
-        'app.Users',
-        'app.Departments',
-        'app.Positions',
         'app.FeedbackForms',
-        'app.Items',
+        'app.Users',
+        'app.RepairForms',
         'app.ServiceForms',
+        'app.Items',
     ];
 
     /**
@@ -40,8 +39,8 @@ class UsersTableTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
-        $this->Users = $this->getTableLocator()->get('Users', $config);
+        $config = $this->getTableLocator()->exists('FeedbackForms') ? [] : ['className' => FeedbackFormsTable::class];
+        $this->FeedbackForms = $this->getTableLocator()->get('FeedbackForms', $config);
     }
 
     /**
@@ -51,7 +50,7 @@ class UsersTableTest extends TestCase
      */
     protected function tearDown(): void
     {
-        unset($this->Users);
+        unset($this->FeedbackForms);
 
         parent::tearDown();
     }
@@ -60,7 +59,7 @@ class UsersTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     * @uses \App\Model\Table\UsersTable::validationDefault()
+     * @uses \App\Model\Table\FeedbackFormsTable::validationDefault()
      */
     public function testValidationDefault(): void
     {
@@ -71,7 +70,7 @@ class UsersTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     * @uses \App\Model\Table\UsersTable::buildRules()
+     * @uses \App\Model\Table\FeedbackFormsTable::buildRules()
      */
     public function testBuildRules(): void
     {

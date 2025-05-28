@@ -11,7 +11,11 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property \App\Model\Table\DepartmentsTable&\Cake\ORM\Association\BelongsTo $Departments
+ * @property \App\Model\Table\PositionsTable&\Cake\ORM\Association\BelongsTo $Positions
+ * @property \App\Model\Table\FeedbackFormsTable&\Cake\ORM\Association\HasMany $FeedbackForms
  * @property \App\Model\Table\ItemsTable&\Cake\ORM\Association\HasMany $Items
+ * @property \App\Model\Table\ServiceFormsTable&\Cake\ORM\Association\HasMany $ServiceForms
  *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
@@ -42,21 +46,26 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('email');
+        $this->setDisplayField('id_number');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Departments', [
             'foreignKey' => 'department_id',
-        ]);
-        $this->belongsTo('Positions', [
-            'foreignKey' => 'position_name'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Positions', [
             'foreignKey' => 'position_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->hasMany('FeedbackForms', [
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Items', [
+            'foreignKey' => 'user_id',
+        ]);
+        $this->hasMany('ServiceForms', [
             'foreignKey' => 'user_id',
         ]);
     }
@@ -72,7 +81,7 @@ class UsersTable extends Table
         $validator
             ->scalar('firstname')
             ->requirePresence('firstname', 'create')
-            ->notEmptyString('firstname');
+            ->allowEmptyString('firstname');
 
         $validator
             ->scalar('middlename')
@@ -81,17 +90,49 @@ class UsersTable extends Table
         $validator
             ->scalar('lastname')
             ->requirePresence('lastname', 'create')
-            ->notEmptyString('lastname');
+            ->allowEmptyString('lastname');
 
         $validator
-            ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmptyString('email');
+            ->integer('id_number')
+            ->requirePresence('id_number', 'create')
+            ->notEmptyString('id_number');
 
         $validator
             ->scalar('password')
             ->requirePresence('password', 'create')
             ->notEmptyString('password');
+
+        $validator
+            ->scalar('pagibig_number')
+            ->allowEmptyString('pagibig_number');
+
+        $validator
+            ->scalar('philhealth_number')
+            ->allowEmptyString('philhealth_number');
+
+        $validator
+            ->scalar('sss_number')
+            ->allowEmptyString('sss_number');
+
+        $validator
+            ->scalar('tin_number')
+            ->allowEmptyString('tin_number');
+
+        $validator
+            ->date('birthdate')
+            ->allowEmptyDate('birthdate');
+
+        $validator
+            ->scalar('cpe_name')
+            ->allowEmptyString('cpe_name');
+
+        $validator
+            ->scalar('cpe_address')
+            ->allowEmptyString('cpe_address');
+
+        $validator
+            ->scalar('cpe_contact')
+            ->allowEmptyString('cpe_contact');
 
         $validator
             ->scalar('is_active')
@@ -117,7 +158,7 @@ class UsersTable extends Table
             ->scalar('is_tech')
             ->requirePresence('is_tech', 'create')
             ->notEmptyString('is_tech');
-            
+
         $validator
             ->scalar('is_teacher')
             ->requirePresence('is_teacher', 'create')
@@ -125,7 +166,11 @@ class UsersTable extends Table
 
         $validator
             ->integer('department_id')
-            ->allowEmptyString('department_id');
+            ->notEmptyString('department_id');
+
+        $validator
+            ->integer('position_id')
+            ->notEmptyString('position_id');
 
         return $validator;
     }
@@ -139,8 +184,8 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
         $rules->add($rules->existsIn('department_id', 'Departments'), ['errorField' => 'department_id']);
+        $rules->add($rules->existsIn('position_id', 'Positions'), ['errorField' => 'position_id']);
 
         return $rules;
     }

@@ -15,11 +15,14 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $purchase_date
  * @property string $count
  * @property string $is_active
+ * @property int|null $user_id
+ * @property int|null $user_added
+ * @property int|null $user_modified
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
- * @property int $user_id
  *
  * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\RepairForm[] $repair_forms
  */
 class Item extends Entity
 {
@@ -39,9 +42,12 @@ class Item extends Entity
         'purchase_date' => true,
         'count' => true,
         'is_active' => true,
+        'user_id' => true,
+        'user_added' => true,
+        'user_modified' => true,
         'created' => true,
         'modified' => true,
-        'user_id' => true,
         'user' => true,
+        'repair_forms' => true,
     ];
 }

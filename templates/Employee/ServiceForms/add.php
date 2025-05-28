@@ -56,17 +56,6 @@
                     </div>
 
                     <div class="form-group">
-                        <?= $this->Form->control('photo', [
-                            'class' => 'form-control',
-                            'id' => 'InputFile',
-                            'label' => 'Photo',
-                            'type' => 'file',
-                            ]); ?>
-                            <img id="photoPreview" src="#" alt="Photo Preview" style="display:none; max-width:500px; margin-top:10px;" />
-                    </div>
-                    
-
-                    <div class="form-group">
                         <?= $this->Form->control('description', [
                             'class' => 'form-control',
                             'id' => 'description',

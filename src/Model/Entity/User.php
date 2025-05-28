@@ -2,10 +2,9 @@
 declare(strict_types=1);
 
 namespace App\Model\Entity;
-
-use Cake\ORM\Entity;
 use Authentication\PasswordHasher\DefaultPasswordHasher; // Add this line
 
+use Cake\ORM\Entity;
 
 /**
  * User Entity
@@ -14,19 +13,32 @@ use Authentication\PasswordHasher\DefaultPasswordHasher; // Add this line
  * @property string $firstname
  * @property string|null $middlename
  * @property string $lastname
- * @property string $email
+ * @property int $id_number
  * @property string $password
+ * @property string|null $pagibig_number
+ * @property string|null $philhealth_number
+ * @property string|null $sss_number
+ * @property string|null $tin_number
+ * @property \Cake\I18n\FrozenDate|null $birthdate
+ * @property string|null $cpe_name
+ * @property string|null $cpe_address
+ * @property string|null $cpe_contact
  * @property string $is_active
  * @property string $is_admin
  * @property string $is_staff
  * @property string $is_employee
+ * @property string $is_tech
  * @property string $is_teacher
- * @property int|null $department_id
- * @property int|null $positions_id
+ * @property int $department_id
+ * @property int $position_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
+ * @property \App\Model\Entity\Department $department
+ * @property \App\Model\Entity\Position $position
+ * @property \App\Model\Entity\FeedbackForm[] $feedback_forms
  * @property \App\Model\Entity\Item[] $items
+ * @property \App\Model\Entity\ServiceForm[] $service_forms
  */
 class User extends Entity
 {
@@ -43,8 +55,16 @@ class User extends Entity
         'firstname' => true,
         'middlename' => true,
         'lastname' => true,
-        'email' => true,
+        'id_number' => true,
         'password' => true,
+        'pagibig_number' => true,
+        'philhealth_number' => true,
+        'sss_number' => true,
+        'tin_number' => true,
+        'birthdate' => true,
+        'cpe_name' => true,
+        'cpe_address' => true,
+        'cpe_contact' => true,
         'is_active' => true,
         'is_admin' => true,
         'is_staff' => true,
@@ -55,7 +75,11 @@ class User extends Entity
         'position_id' => true,
         'created' => true,
         'modified' => true,
+        'department' => true,
+        'position' => true,
+        'feedback_forms' => true,
         'items' => true,
+        'service_forms' => true,
     ];
 
     /**
@@ -66,10 +90,12 @@ class User extends Entity
     protected $_hidden = [
         'password',
     ];
+
     protected function _setPassword(string $password) : ?string
     {
         if (strlen($password) > 0) {
             return (new DefaultPasswordHasher())->hash($password);
         }
     }
+
 }

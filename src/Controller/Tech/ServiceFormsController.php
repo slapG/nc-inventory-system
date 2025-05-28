@@ -40,6 +40,10 @@ class ServiceFormsController extends AppController
     {
     }
 
+    public function blank()
+    {
+    }
+
     public function getHistoryServiceForms() 
     {
         $serviceForms = $this->ServiceForms->find('all', [

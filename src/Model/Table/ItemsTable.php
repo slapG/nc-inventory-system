@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * Items Model
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\RepairFormsTable&\Cake\ORM\Association\HasMany $RepairForms
  *
  * @method \App\Model\Entity\Item newEmptyEntity()
  * @method \App\Model\Entity\Item newEntity(array $data, array $options = [])
@@ -49,7 +50,9 @@ class ItemsTable extends Table
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
+        ]);
+        $this->hasMany('FeedbackForms', [
+            'foreignKey' => 'item_id',
         ]);
         $this->hasMany('RepairForms', [
             'foreignKey' => 'item_id',
@@ -72,7 +75,8 @@ class ItemsTable extends Table
         $validator
             ->scalar('code')
             ->requirePresence('code', 'create')
-            ->notEmptyString('code');
+            ->notEmptyString('code')
+            ->add('code', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('quantity')
@@ -96,7 +100,15 @@ class ItemsTable extends Table
 
         $validator
             ->integer('user_id')
-            ->notEmptyString('user_id');
+            ->allowEmptyString('user_id');
+
+        $validator
+            ->integer('user_added')
+            ->allowEmptyString('user_added');
+
+        $validator
+            ->integer('user_modified')
+            ->allowEmptyString('user_modified');
 
         return $validator;
     }
@@ -110,6 +122,7 @@ class ItemsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
+        $rules->add($rules->isUnique(['code']), ['errorField' => 'code']);
         $rules->add($rules->existsIn('user_id', 'Users'), ['errorField' => 'user_id']);
 
         return $rules;
