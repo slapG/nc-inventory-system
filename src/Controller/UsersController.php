@@ -132,7 +132,7 @@ class UsersController extends AppController
             if ($user->is_admin == 1) {
                 $redirectUrl = Router::url([
                     'prefix' => 'Admin',
-                    'controller' => 'users',
+                    'controller' => 'dashboard',
                     'action' => 'index',
                 ]);
                 return $this->response->withType('application/json')

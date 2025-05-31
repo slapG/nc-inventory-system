@@ -181,7 +181,7 @@
                             <td><?= h($repairForms->is_active) ?></td>
                             <td><?= h($repairForms->status_id) ?></td>
                             <td><?= h($repairForms->created) ?></td>
-                            <td><?= h($repairForms->modif ied) ?></td>
+                            <td><?= h($repairForms->modified) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'RepairForms', 'action' => 'view', $repairForms->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'RepairForms', 'action' => 'edit', $repairForms->id]) ?>

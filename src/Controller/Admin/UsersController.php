@@ -30,11 +30,18 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->loadModel('Departments');
+        $this->loadModel('Positions');
+        $user = $this->Users->newEmptyEntity();
+
+        $positions = $this->Positions->find('list', ['limit' => 200]);
+        $departments = $this->Departments->find('list', ['limit' => 200]);
+        $this->set(compact('departments', 'positions', 'user'));
     }
     public function getUsers()
     {
         $users = $this->Users->find()
-            ->contain(['Departments'])
+            ->contain(['Departments', 'Positions'])
             ->all();
 
         $data = [];
@@ -44,9 +51,10 @@ class UsersController extends AppController
                 'firstname' => $user->firstname,
                 'middlename' => $user->middlename,
                 'lastname' => $user->lastname,
-                'email' => $user->email,
+                'id_number' => $user->id_number,
                 'is_active' => $user->is_active,
                 'department_name' => $user->department ? $user->department->department_name : '',
+                'position_name' => $user->position ? $user->position->position_name : '',
                 'created' => $user->created,
                 'modified' => $user->modified,
             ];
@@ -78,17 +86,54 @@ class UsersController extends AppController
      */
     public function add()
     {
-        $user = $this->Users->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+        $this->request->allowMethod(['post', 'ajax']);
+        $this->autoRender = false;
+        $this->loadModel('Departments');
+        $this->loadModel('Positions');
 
-                return $this->redirect(['action' => 'index']);
+        $data = $this->request->getData();
+
+        $data['is_admin'] = "0";  
+        $data['is_staff'] = "0";
+        $data['is_employee'] = "0";
+        $data['is_teacher'] = "0";
+        $data['is_tech'] = "0";
+
+        if (!empty($data['user_role'])) {
+            $selectedRole = $data['user_role'];
+            if (in_array($selectedRole, ['is_admin', 'is_staff', 'is_employee', 'is_teacher', 'is_tech'])) {
+                $data[$selectedRole] = "1";
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
+
+        unset($data['user_role']);
+
+        $user = $this->Users->newEmptyEntity();
+        $user = $this->Users->patchEntity($user, $data);
+
+        if ($this->Users->save($user)) {
+            $response = ['status' => 'success', 'message' => 'User added successfully'];
+        } else {
+            $response = ['status' => 'error', 'message' => 'Failed to add user', 'errors' => $user->getErrors()];
+        }
+
+        $this->response = $this->response->withType('application/json')
+            ->withStringBody(json_encode($response));
+        return $this->response;
+    }
+
+    public function deactivate($id = null)
+    {
+        $user = $this->Users->get($id);
+        $user->is_active = "0";
+        if ($this->Users->save($user)) {
+            $this->response = $this->response->withType('application/json')
+                ->withStringBody(json_encode(['status' => 'success', 'message' => 'User deactivated successfully']));
+        } else {
+            $this->response =$this->response->withType('application/json')
+                ->withStringBody(json_encode(['status' => 'error', 'message' => 'Failed to deactivate user']));
+        }
+        return $this->response;
     }
 
     /**
@@ -100,11 +145,31 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+        $this->loadModel('Departments');
+        $this->loadModel('Positions');
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
+
+        $data = $this->request->getData();
+
+        $data['is_admin'] = "0";  
+        $data['is_staff'] = "0";
+        $data['is_employee'] = "0";
+        $data['is_teacher'] = "0";
+        $data['is_tech'] = "0";
+
+        if (!empty($data['user_role'])) {
+            $selectedRole = $data['user_role'];
+            if (in_array($selectedRole, ['is_admin', 'is_staff', 'is_employee', 'is_teacher', 'is_tech'])) {
+                $data[$selectedRole] = "1";
+            }
+        }
+
+        unset($data['user_role']);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user = $this->Users->patchEntity($user, $data, $this->request->getData());
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -112,6 +177,37 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
+
+        if ($user->is_admin) {
+            $user->user_role = 'is_admin';
+        } elseif ($user->is_staff) {
+            $user->user_role = 'is_staff';
+        } elseif ($user->is_employee) {
+            $user->user_role = 'is_employee';
+        } elseif ($user->is_teacher) {
+            $user->user_role = 'is_teacher';
+        } elseif ($user->is_tech) {
+            $user->user_role = 'is_tech';
+        }
+            
+        $departments = $this->Departments->find('list', ['limit' => 200]);
+        $positions = $this->Positions->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'departments', 'positions'));
+    }
+
+    public function changePassword($id = null)
+    {
+        $user = $this->Users->get($id);
+        
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData(),['fields' => ['password']]);
+            if ($this->Users->save($user)){
+                $this->Flash->success(__('The password has been changed.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The password could not be changed. Please, try again.'));
+        }
+
         $this->set(compact('user'));
     }
 

@@ -26,24 +26,23 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
+    <?= $this->Html->meta('csrfToken', $this->request->getAttribute('csrfToken')); ?>
     <?= $this->Html->css([
         'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback',
         '/dist/css/adminlte.min.css',
         '/plugins/fontawesome-free/css/all.min.css',
         '/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
         '/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
-        'plugins/sweetalert2/sweetalert2.min.css',
-
+        '/plugins/sweetalert2/sweetalert2.min.css',
         ]) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition layout-top-nav">
     <div class="wrapper">
         <?= $this->Flash->render() ?>
         <?= $this->element('admin/navbar') ?>
-        <?= $this->element('admin/sidebar') ?>
         <div class="content-wrapper">
             <?= $this->fetch('content') ?>
         </div>
@@ -63,9 +62,7 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
     '/plugins/datatables-responsive/js/dataTables.responsive.min.js',
     '/plugins/datatables-responsive/js/responsive.bootstrap4.min.js',
     '/plugins/sweetalert2/sweetalert2.min.js',
-    ],['defer' => true])?>
-    <?= $this->Html->script('https://cdn.jsdelivr.net/npm/sweetalert2@11') ?>
-
+    ])?>
     <?= $this->fetch('script') ?>
 </body>
 </html>

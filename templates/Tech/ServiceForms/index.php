@@ -22,7 +22,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    
                     <div class="card-body">
                         <div class="table-responsive" style="white-space: nowrap;">
                         <table id="serviceFormsTable" class="table table-bordered table-hover " style="width: 100%;">

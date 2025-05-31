@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>List of all Service Forms</h1>
+                <h1>New Items/Equipmnentnts For Approval</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -23,6 +23,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header">
+                        <h4>Add  Sorting here</h4>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive" style="white-space: nowrap;">
                             <table class="table table-bordered table-hover" id="itemsTable" style="width: 100%;">
@@ -93,13 +96,3 @@
         </div>
     </div>
 </section>
-<script>
-$(document).ready(function() {
-    $('#itemsTable').DataTable({
-        "order": [], // No initial sorting
-        "pageLength": 10,
-        "lengthMenu": [10, 25, 50, 100],
-        "responsive": true
-    });
-});
-</script>
