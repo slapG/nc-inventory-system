@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $item_name
+ * @property string $description
  * @property string $code
  * @property string $quantity
  * @property \Cake\I18n\FrozenDate $purchase_date
@@ -55,5 +56,6 @@ class Item extends Entity
         'user' => true,
         'repair_forms' => true,
         'status_id' => true,
+        'description' => true
     ];
 }

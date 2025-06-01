@@ -8,12 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>List of all Items</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <a href ="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Items', 'action' => 'add']) ?>" class="btn btn-outline-primary float-sm-right">Add User</a>
-                </ol>
+                <h1>New Items/Equipmnentnts For Approval</h1>
             </div>
         </div>
     </div>
@@ -24,28 +19,31 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title"></h3>
+                        <h4>Add  Sorting here</h4>
                     </div>
                     <div class="card-body">
-                        <table id="itemsTable" class="table table-bordered table-hover table-responsive" style="width: 100%; height: 350px; white-space: nowrap;">
-                            <thead>
+                        <div class="table-responsive" style="white-space: nowrap;">
+                            <table class="table table-bordered table-hover" id="itemsTable" style="width: 100%;">
+                            <thead >
                                 <tr>
                                     <th>ID</th>
                                     <th>Item Name</th>
+                                    <th>Description</th>
                                     <th>Code</th>
                                     <th>Quantity</th>
                                     <th>Purchase Date</th>
-                                    <th>Count</th>
-                                    <th>Is Active</th>
-                                    <th>Added By</th>
-                                    <th>Created</th>    
+                                    <th>Acquire Date</th>
+                                    <th>Status</th>
+                                    <th>Type</th>
+                                    <th>User</th>
+                                    <th>User Added</th>
+                                    <th>User Modified</th>
+                                    <th>Created</th>
                                     <th>Modified</th>
-                                    <th>Actions</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

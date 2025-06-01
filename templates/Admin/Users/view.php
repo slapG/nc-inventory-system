@@ -14,7 +14,7 @@
                     <h5 class="mb-0"><strong>User Details</strong></h5>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered mb-0" style="">
+                    <table class="table table-bordered mb-0" style="height: 500px;">
                         <tr>
                             <th>Full Name</th>
                             <td><?= h($user->firstname. ' '. $user->middlename. ' '. $user->lastname) ?></td>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="card-body">
                     <?php if (!empty($user->items)) : ?>
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="height: 500px;">
                             <table class="table table-bordered table-hover table-sm mb-0" style="width: 100%; max-height: 500px; white-space: nowrap;">
                                 <thead>
                                     <tr>

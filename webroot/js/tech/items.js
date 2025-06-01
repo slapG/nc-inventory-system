@@ -8,7 +8,7 @@ $(document).ready(function () {
             processing: false,
             serverSide: false,
             ajax: {
-                url: "/nc-inventory-system/admin/items/getItems",
+                url: "/nc-inventory-system/tech/items/getItems",
                 type: "GET",
                 dataSrc: ""
             },
@@ -23,7 +23,7 @@ $(document).ready(function () {
             {
                 data: "status",
                 render: function(data) {
-                    if (data === 'ACCOMPLISHED') return '<span class="badge bg-success">ACCOMPLIHSED</span>';
+                    if (data === 'PENDING') return '<span class="badge bg-warning">PENDING</span>';
                     if (data === 'APPROVED') return '<span class="badge bg-success text-dark">APPROVED</span>';
                 }
             },
@@ -60,17 +60,14 @@ $(document).ready(function () {
                 className: "text-center",
                 render: function (data, type, row) {
                     return `
-                        <a href="/nc-inventory-system/admin/items/view/${row.id}" class="btn btn-sm btn-success mr-1" title="View">
+                        <a href="/nc-inventory-system/tech/items/view/${row.id}" class="btn btn-sm btn-success mr-1" title="View">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="/nc-inventory-system/admin/items/edit/${row.id}" class="btn btn-sm btn-primary mr-1" title="Edit">
+                        <a href="/nc-inventory-system/tech/items/edit/${row.id}" class="btn btn-sm btn-primary mr-1" title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn btn-sm btn-danger delete-item" data-id="${row.id}" title="Delete">
                             <i class="fas fa-trash"></i>
-                        </button>
-                        <button class="btn btn-sm btn-success approve-btn" data-id="${row.id}" title="Approve">
-                            <i class="fas fa-check"></i>
                         </button>
                     `;
                 }
@@ -83,22 +80,3 @@ $(document).ready(function () {
         }, 5000);
     }
 });
-
-
-$(document).ready(function(){
-    $('#approve').click(function(){
-        var id = $(this).data('id');
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/nc-inventory-system/admin/items/approve/' + id,
-            type: 'POST',
-            success: function(response){
-                location.reload();
-            }
-        });
-    });
-})

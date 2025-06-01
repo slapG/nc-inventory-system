@@ -24,12 +24,37 @@ class ItemsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users', 'Statuses', 'AddedUser', 'ModifiedUser'],
-        ];
-        $items = $this->paginate($this->Items);
+    }
+        public function getItems()
+    {
+        $items =$this->Items->find()
+            ->contain(['Users', 'Statuses', 'AddedUser', 'ModifiedUser'])
+            ->where(['Items.is_active' => "1", 'Items.status_id' => 1])
+            ->all();
+        $data = [];
+        foreach ($items as $item) {
+            $data[] = [
+                'id' => $item->id,
+                'item_name' => $item->item_name,
+                'description' => $item->description,
+                'code' => $item->code,
+                'quantity' => $item->quantity,
+                'purchase_date' => $item->purchase_date,
+                'acquire_date' => $item->acquire_date,
+                'type' => $item->type,
+                'count' => $item->count,
+                'is_active' => $item->is_active, 
+                'status' => $item->status ? $item->status->status : '',
+                'user_id' => $item->user ? $item->user->firstname .' '. $item->user->middlename .' '. $item->user->lastname : '' ,
+                'user_added' => $item->added_user ? $item->added_user->firstname .' '. $item->added_user->middlename .' '. $item->added_user->lastname : '' ,
+                'user_modified' => $item->user_modified,
+                'created' => $item->created,
+                'modified' => $item->modified,
+            ];
+        }
+        return $this->response->withType('application/json')
+            ->withStringBody(json_encode($data));
 
-        $this->set(compact('items'));
     }
 
     /**

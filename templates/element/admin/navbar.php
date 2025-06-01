@@ -9,7 +9,7 @@
     <ul class="navbar-nav">
       <!-- Profile  -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
+        <a class="nav-link" data-toggle="dropdown">
           <strong>PROFILE</strong>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -43,9 +43,20 @@
           </a>
         </div>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-          <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Items', 'action' => 'index']) ?>" class="nav-link"><strong>
-              INVENTORY</strong></a>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <strong>INVENTORY</strong>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <div class="dropdown-divider"></div>
+          <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Items', 'action' => 'index']) ?>" class="dropdown-item">
+            <i class="fas fa-tools mr-2"></i>VIEW INVENTORY
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Items', 'action' => 'approval']) ?>" class="dropdown-item">
+            <i class="fas fa-users mr-2"></i>FOR APPROVAL
+          </a>
+        </div>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
           <a href="<?= $this->Url->build(['prefix' => false, 'controller' => 'Users', 'action' => 'logout']) ?>" class="nav-link"><strong>

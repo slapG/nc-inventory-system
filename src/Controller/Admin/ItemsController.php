@@ -30,25 +30,45 @@ class ItemsController extends AppController
      */
     public function index()
     {
+    }
 
+    public function approve($id = null)
+    {
+        $item = $this->Items->get($id);
+        $item->status_id = 2;
+        if ($this->Items->save($item)){
+            $this->response = $this->response->withType('application/json')
+                ->withStringBody(json_encode(['status' => 'success', 'message' => 'Item approved successfully']));
+        } else {
+            $this->response = $this->response->withType('application/json')
+                ->withStringBody(json_encode(['status' => 'error', 'message' => 'Failed to approve item']));
+        }
+        return $this->response;
     }
 
     public function getItems()
     {
         $items =$this->Items->find()
-            ->contain(['Users'])
+            ->contain(['Users', 'Statuses', 'AddedUser', 'ModifiedUser'])
+            ->where(['Items.is_active' => "1", 'Items.status_id' => 2])
             ->all();
         $data = [];
         foreach ($items as $item) {
             $data[] = [
                 'id' => $item->id,
                 'item_name' => $item->item_name,
+                'description' => $item->description,
                 'code' => $item->code,
                 'quantity' => $item->quantity,
                 'purchase_date' => $item->purchase_date,
+                'acquire_date' => $item->acquire_date,
+                'type' => $item->type,
                 'count' => $item->count,
-                'is_active' => $item->is_active,
+                'is_active' => $item->is_active, 
+                'status' => $item->status ? $item->status->status : '',
                 'user_id' => $item->user ? $item->user->firstname .' '. $item->user->middlename .' '. $item->user->lastname : '' ,
+                'user_added' => $item->user_added,
+                'user_modified' => $item->user_modified,
                 'created' => $item->created,
                 'modified' => $item->modified,
             ];

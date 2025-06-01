@@ -17,7 +17,8 @@
                         <?= $this->Form->control('password', [
                             'type' => 'password',
                             'class' => 'form-control',
-                            'label' => 'New Password'
+                            'label' => 'New Password',
+                            'value' => ''
                         ]) ?>
                     </div>
                     <div class="form-group">

@@ -34,6 +34,7 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
         '/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
         '/plugins/datatables-responsive/css/responsive.bootstrap4.min.css',
         '/plugins/sweetalert2/sweetalert2.min.css',
+        'custom.css'
         ]) ?>
 
     <?= $this->fetch('meta') ?>
