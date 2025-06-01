@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    if (!$.fn.DataTable.isDataTable('#usersTable')) {
+    if (!$.fn.DataTable.isDataTable('#inactiveUsersTable')) {
         console.log('items.js loaded');
-        let table = $('#usersTable').DataTable({
+        let table = $('#inactiveUsersTable').DataTable({
             scrollX: true,
             pagelength: 20,
             lengthMenu: [20, 50, 100, 500],
             processing: false,
             serverSide: false,
             ajax: {
-                url: "/nc-inventory-system/admin/users/getUsers",
+                url: "/nc-inventory-system/admin/users/getInactiveUsers",
                 type: "GET",
                 dataSrc: ""
             },
@@ -62,13 +62,7 @@ $(document).ready(function () {
                 searchable: false,
                     render: function (data, type, row) {
                     return `
-                        <a href="/nc-inventory-system/admin/users/view/${row.id}" class="btn btn-success btn-sm" title="view">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/nc-inventory-system/admin/users/edit/${row.id}" class="btn btn-primary btn-sm" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn btn-danger btn-sm delete-user" id="delete-user" data-id="${row.id}" title="Deactivate">
+                        <button class="btn btn-success btn-sm activate-user" id="activate-user" data-id="${row.id}" title="Activate">
                             <i class="fas fa-user-slash"></i>
                         </button>
                     `;
@@ -84,14 +78,14 @@ $(document).ready(function () {
 });
 
 $(document).ready(function(){
-    $('#usersTable').on('click', '.delete-user', function(e) {
+    $('#inactiveUsersTable').on('click', '.activate-user', function(e) {
         const userId = $(this).data('id');
         Swal.fire({
             title: 'Are you sure?',
-            text: 'Are you sure you want to deactivate this account?',
+            text: 'Are you sure you want to activate this account?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes, deactivate',
+            confirmButtonText: 'Yes, activate',
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -101,7 +95,7 @@ $(document).ready(function(){
                     }
                 });
                 $.ajax({
-                    url: '/nc-inventory-system/admin/users/deactivate/' + userId,
+                    url: '/nc-inventory-system/admin/users/activate/' + userId,
                     type: 'POST',
                     dataType: 'json',
                     success: function(response) {
@@ -121,34 +115,3 @@ $(document).ready(function(){
         });
     });
 });
-
-
-
-$(document).ready(function() {
-    $('#addUserForm').on('submit', function(e) {
-        e.preventDefault();
-
-        $.ajax({
-            url: '/nc-inventory-system/admin/users/add',
-            type: 'POST',
-            data: $(this).serialize(),
-            dataType: 'json',
-            success: function(response) {
-                if (response.status === 'success') {
-                    $('#addUserModal').modal('hide');
-                    $('#addUserForm')[0].reset();
-                    Swal.fire('Success', response.message, 'success').then(() => {
-                    });
-                } else {
-                    Swal.fire('Error', response.message, 'error');
-                    console.log(response.errors);
-                }
-            },
-            error: function(xhr) {
-                Swal.fire('Error', 'An unexpected error occurred.', 'error');
-            }
-        });
-    });
-});
-
-

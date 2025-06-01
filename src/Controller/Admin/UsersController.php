@@ -42,7 +42,41 @@ class UsersController extends AppController
     {
         $users = $this->Users->find()
             ->contain(['Departments', 'Positions'])
-            ->all();
+            ->where(['is_active' => "1"])->all();
+
+        $data = [];
+        foreach ($users as $user) {
+            $data[] = [
+                'id' => $user->id,
+                'firstname' => $user->firstname,
+                'middlename' => $user->middlename,
+                'lastname' => $user->lastname,
+                'id_number' => $user->id_number,
+                'is_active' => $user->is_active,
+                'department_name' => $user->department ? $user->department->department_name : '',
+                'position_name' => $user->position ? $user->position->position_name : '',
+                'created' => $user->created,
+                'modified' => $user->modified,
+            ];
+        }
+        return $this->response->withType('application/json')
+            ->withStringBody(json_encode($data));
+    }
+    public function inactive()
+    {
+        $this->loadModel('Departments');
+        $this->loadModel('Positions');
+
+        $positions = $this->Positions->find('list', ['limit' => 200]);
+        $departments = $this->Departments->find('list', ['limit' => 200]);
+        $this->set(compact('departments', 'positions'));
+    }
+
+    public function getInactiveUsers()
+    {
+        $users = $this->Users->find()
+            ->contain(['Departments', 'Positions'])
+            ->where(['is_active' => "0"])->all();
 
         $data = [];
         foreach ($users as $user) {
@@ -73,7 +107,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Items'],
+            'contain' => ['Departments', 'Positions', 'FeedbackForms', 'Items', 'ServiceForms'],
         ]);
 
         $this->set(compact('user'));
@@ -133,6 +167,20 @@ class UsersController extends AppController
             $this->response =$this->response->withType('application/json')
                 ->withStringBody(json_encode(['status' => 'error', 'message' => 'Failed to deactivate user']));
         }
+        return $this->response;
+    }
+
+    public function activate($id = null)
+    {
+        $user = $this->Users->get($id);
+        $user->is_active = "1";
+        if ($this->Users->save($user)){
+            $this->response = $this->response->withType('application/json')
+                ->withStringBody(json_encode(['status' => 'success', 'message' => 'User activated successfully']));
+        } else {
+            $this->response = $this->response->withType('application/json')
+                ->withStringBody(json_encode(['status' => 'error', 'message' => 'Failed to activate user']));
+        } 
         return $this->response;
     }
 

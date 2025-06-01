@@ -1,13 +1,13 @@
 <nav class="main-header navbar navbar-expand navbar-yellow navbar-light">
-    <!-- Left navbar links -->
      <style>
   .nav-item.dropdown:hover > .dropdown-menu {
     display: block;
-    margin-top: 0;
+    margin-top: 0px;  
     left: 0px;
   }
 </style>
     <ul class="navbar-nav">
+      <!-- Profile  -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <strong>PROFILE</strong>
@@ -27,22 +27,19 @@
           </a>
         </div>
       </li>
+      <!-- Users  -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <strong>REQUEST</strong>
+          <strong>USERS</strong>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
-          <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'ServiceForms', 'action' => 'index']) ?>" class="dropdown-item">
-            <i class="fas fa-tools mr-2"></i>REQUEST SERVICE
+          <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'index']) ?>" class="dropdown-item">
+            <i class="fas fa-tools mr-2"></i>VIEW ACTIVE USERS
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i>REQUESTITEM
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i>REQUIEST EQUIPMENT
+          <a href="<?= $this->Url->build(['prefix' => 'Admin', 'controller' => 'Users', 'action' => 'inactive']) ?>" class="dropdown-item">
+            <i class="fas fa-users mr-2"></i>VIEW INACTIVE USERS
           </a>
         </div>
       </li>

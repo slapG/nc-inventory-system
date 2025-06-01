@@ -55,6 +55,7 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
     'admin/repair-forms.js',
     'admin/service-forms.js',
     'admin/departments.js',
+    'admin/usersInactive.js',
     '/plugins/bootstrap/js/bootstrap.bundle.min.js',
     '/dist/js/adminlte.min.js',
     '/plugins/datatables/jquery.dataTables.min.js',
