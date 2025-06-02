@@ -54,12 +54,64 @@
         </div>
         <div class="col-lg-9 mb-4">
             <div class="card shadow">
-                <div class="card-header  text-black">
+                <div class="card-header text-black d-flex align-items-center">
                     <h5 class="mb-0"><strong>Equipments</strong></h5>
+                    <button class="btn btn-sm btn-primary ml-auto" data-toggle="modal" id="userAddItems" data-target="#addItemModal" data-user-id="<?= $user->id ?>">Add Item</button>
                 </div>
+
+                <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addItemModalLabel">Add Item</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive" style="height: 493px;">
+                                        <table class="table table-bordered table-hover table-sm mb-0" style="width: 100%; max-height: 500px; white-space: nowrap;" id="userItemsTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Item Name</th>
+                                                    <th>Description</th>
+                                                    <th>Code</th>
+                                                    <th>Quantity</th>
+                                                    <th>Purchase Date</th>
+                                                    <th>Acquire Date</th>
+                                                    <th>Status</th>
+                                                    <th>Type</th>
+                                                    <th>User</th>
+                                                    <th>User Added</th>
+                                                    <th>User Modified</th>
+                                                    <th>Created</th>
+                                                    <th>Modified</th>
+                                                    <th class="text-center">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button class="btn btn-sm btn-success send-btn" id="getCheckedIdsBtn" data-id="${row.id}" title="Approve">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card-body">
                     <?php if (!empty($user->items)) : ?>
-                        <div class="table-responsive" style="height: 500px;">
+                        <div class="table-responsive" style="height: 493px;">
                             <table class="table table-bordered table-hover table-sm mb-0" style="width: 100%; max-height: 500px; white-space: nowrap;">
                                 <thead>
                                     <tr>
@@ -87,7 +139,7 @@
                                         <td><?= h($items->acquire_date) ?></td>
                                         <td><?= h($items->type) ?></td>
                                         <td><?= h($items->count) ?></td>
-                                        <td><?= $items->is_active ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-secondary">No</span>' ?></td>
+                                        <td><?= $items->is_active ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-secondary">No</span>' ?></td>
                                         <td><?= h($items->user_added) ?></td>
                                         <td><?= h($items->created) ?></td>
                                         <td><?= h($items->modified) ?></td>
@@ -241,3 +293,7 @@
     </div>
 </div>
 </div>
+<script>
+    var viewedUserId = <?= (int)$user->id ?>;
+    console.log(viewedUserId); 
+</script>

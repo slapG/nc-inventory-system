@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    if (!$.fn.DataTable.isDataTable('#itemsTable')) {
+    if (!$.fn.DataTable.isDataTable('#userItemsTable')) {
         console.log('items.js loaded');
-        let table = $('#itemsTable').DataTable({
+        let table = $('#userItemsTable').DataTable({
             scrollX: true,
             pagelength: 20,
             lengthMenu: [20, 50, 100, 500],
@@ -13,7 +13,14 @@ $(document).ready(function () {
                 dataSrc: ""
             },
             columns: [
-            { data: "id" },
+            {
+                data: "id",
+                render: function (data, type, row, meta) {
+                    return '<input type="checkbox" class="row-checkbox text-center" value="' + data + '">';
+                },
+                orderable: false,
+                searchable: false
+            },
             { data: "item_name" },
             { data: "description" },
             { data: "code" },
@@ -28,9 +35,9 @@ $(document).ready(function () {
                 }
             },
             { data: "type" },
-            { data: "user_id" }, // Make sure your JSON returns this
-            { data: "user_added" },     // Should be a string like "Firstname Middlename Lastname | id_number"
-            { data: "user_modified" },  // Should be a string or number
+            { data: "user_id" }, 
+            { data: "user_added" },     
+            { data: "user_modified" },  
             {
                 data: "created",
                 title: "Created",
@@ -63,21 +70,43 @@ $(document).ready(function () {
                         <a href="/nc-inventory-system/admin/items/view/${row.id}" class="btn btn-sm btn-success mr-1" title="View">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="/nc-inventory-system/admin/items/edit/${row.id}" class="btn btn-sm btn-primary mr-1" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </a>
                     `;
                 }
             }
         ]
         });
-
-        setInterval(function () {
-            table.ajax.reload(null, false); 
-        }, 5000);
     }
-});
-
-
     
+    $(document).on('click', '#getCheckedIdsBtn', function() {
+        var checkedIds = [];
+        $('#userItemsTable .row-checkbox:checked').each(function() {
+            checkedIds.push($(this).val());
+        });
 
+        if (checkedIds.length === 0) {
+            Swal.fire('No items selected', 'Please select at least one item.', 'warning');
+            return;
+        }
+
+        // viewedUserId is set in your view.php
+        $.ajax({
+            url: '/nc-inventory-system/admin/items/sendItems',
+            type: 'POST',
+            data: {
+                item_ids: checkedIds,
+                user_id: viewedUserId
+            },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+            },
+            success: function(response) {
+                Swal.fire('Success', 'Items sent to user!', 'success').then(() => {
+                    $('#userItemsTable').DataTable().ajax.reload();
+                });
+            },
+            error: function() {
+                Swal.fire('Error', 'Failed to send items.', 'error');
+            }
+        });
+    });
+});

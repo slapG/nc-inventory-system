@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use function PHPUnit\Framework\isNull;
 
 /**
  * Items Controller
@@ -30,6 +31,8 @@ class ItemsController extends AppController
      */
     public function index()
     {
+        $item = $this->Items->find('all');
+        
     }
 
     public function approve($id = null)
@@ -50,7 +53,12 @@ class ItemsController extends AppController
     {
         $items =$this->Items->find()
             ->contain(['Users', 'Statuses', 'AddedUser', 'ModifiedUser'])
-            ->where(['Items.is_active' => "1", 'Items.status_id' => 2])
+            ->where(function ($exp, $q) {
+                return $exp
+                    ->eq('Items.is_active', '1')
+                    ->eq('Items.status_id', 2)
+                    ->isNull('Items.user_id');
+            })
             ->all();
         $data = [];
         foreach ($items as $item) {
@@ -76,6 +84,65 @@ class ItemsController extends AppController
         return $this->response->withType('application/json')
             ->withStringBody(json_encode($data));
 
+    }
+    public function approval()
+    {   
+    }
+    
+    public function getApprovalItems()
+    {
+        $items =$this->Items->find()
+            ->contain(['Users', 'Statuses', 'AddedUser', 'ModifiedUser'])
+            ->where(function ($exp, $q) {
+                return $exp
+                    ->eq('Items.is_active', '1')
+                    ->eq('Items.status_id', 1)
+                    ->isNull('Items.user_id');
+            })
+            ->all();
+        $data = [];
+        foreach ($items as $item) {
+            $data[] = [
+                'id' => $item->id,
+                'item_name' => $item->item_name,
+                'description' => $item->description,
+                'code' => $item->code,
+                'quantity' => $item->quantity,
+                'purchase_date' => $item->purchase_date,
+                'acquire_date' => $item->acquire_date,
+                'type' => $item->type,
+                'count' => $item->count,
+                'is_active' => $item->is_active, 
+                'status' => $item->status ? $item->status->status : '',
+                'user_id' => $item->user ? $item->user->firstname .' '. $item->user->middlename .' '. $item->user->lastname : '' ,
+                'user_added' => $item->added_user ? $item->added_user->firstname .' '. $item->added_user->middlename .' '. $item->added_user->lastname : '' ,
+                'user_modified' => $item->user_modified,
+                'created' => $item->created,
+                'modified' => $item->modified,
+            ];
+        }
+        return $this->response->withType('application/json')
+            ->withStringBody(json_encode($data));
+
+    }
+    public function sendItems()
+    {
+        $itemIds = $this->request->getData('item_ids');
+        $userId = $this->request->getData('user_id');
+
+        if (empty($itemIds) || empty($userId)) {
+            return $this->response->withType('application/json')
+                ->withStringBody(json_encode(['status' => 'error', 'message' => 'Missing item(s) or user']));
+        }
+
+        $items = $this->Items->find()->where(['id IN' => $itemIds])->all();
+        foreach ($items as $item) {
+            $item->user_id = $userId;
+            $this->Items->save($item);
+        }
+
+        return $this->response->withType('application/json')
+            ->withStringBody(json_encode(['status' => 'success', 'message' => 'Items sent to user successfully']));
     }
     /**
      * View method

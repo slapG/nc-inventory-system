@@ -20,11 +20,10 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Add  Sorting here</h4>
-                        <a href="<?= $this->Url->build(['prefix' => 'Tech', 'controller' => 'Items', 'action' => 'add'])?>"></a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive" style="white-space: nowrap;">
-                            <table class="table table-bordered table-hover" id="itemsTable" style="width: 100%;">
+                            <table class="table table-bordered table-hover" id="itemsApprovalTable" style="width: 100%;">
                             <thead >
                                 <tr>
                                     <th>ID</th>

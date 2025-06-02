@@ -5,13 +5,78 @@
  */
 ?>
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>New Items/Equipmnentnts For Approval</h1>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-2">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-tv"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><? h()?></span>
+                    <span class="info-box-number">
+                    <? h()?>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-2">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-keyboard"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><? h()?></span>
+                    <span class="info-box-number">
+                    <? h()?>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-2">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-mouse"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><? h()?></span>
+                    <span class="info-box-number">
+                    <? h()?>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-2">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><? h()?></span>
+                    <span class="info-box-number">
+                    <? h()?>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-2">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-mouse"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><? h()?></span>
+                    <span class="info-box-number">
+                    <? h()?>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-2">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-mouse"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><? h()?></span>
+                    <span class="info-box-number">
+                    <? h()?>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </section>
 <section class="content">
     <div class="container-fluid">

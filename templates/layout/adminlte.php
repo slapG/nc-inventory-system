@@ -28,7 +28,6 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->meta('csrfToken', $this->request->getAttribute('csrfToken')); ?>
     <?= $this->Html->css([
-        'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback',
         '/dist/css/adminlte.min.css',
         '/plugins/fontawesome-free/css/all.min.css',
         '/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css',
@@ -51,7 +50,9 @@ $cakeDescription = 'NC INVENTORY SYSTEM';
     </div>
     <?= $this->Html->script([
     '/plugins/jquery/jquery.min.js',
+    'admin/usersItem.js',
     'admin/users.js',
+    'admin/itemsApproval.js',
     'admin/items.js',
     'admin/repair-forms.js',
     'admin/service-forms.js',

@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    if (!$.fn.DataTable.isDataTable('#itemsTable')) {
+    if (!$.fn.DataTable.isDataTable('#itemsApprovalTable')) {
         console.log('items.js loaded');
-        let table = $('#itemsTable').DataTable({
+        let table = $('#itemsApprovalTable').DataTable({
             scrollX: true,
             pagelength: 20,
             lengthMenu: [20, 50, 100, 500],
             processing: false,
             serverSide: false,
             ajax: {
-                url: "/nc-inventory-system/admin/items/getItems",
+                url: "/nc-inventory-system/admin/items/getApprovalItems",
                 type: "GET",
                 dataSrc: ""
             },
@@ -23,6 +23,7 @@ $(document).ready(function () {
             {
                 data: "status",
                 render: function(data) {
+                    if (data === 'PENDING') return '<span class="badge bg-warning">PENDING</span>';
                     if (data === 'ACCOMPLISHED') return '<span class="badge bg-success">ACCOMPLIHSED</span>';
                     if (data === 'APPROVED') return '<span class="badge bg-success text-dark">APPROVED</span>';
                 }
@@ -66,6 +67,12 @@ $(document).ready(function () {
                         <a href="/nc-inventory-system/admin/items/edit/${row.id}" class="btn btn-sm btn-primary mr-1" title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
+                        <button class="btn btn-sm btn-danger delete-item" data-id="${row.id}" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="btn btn-sm btn-success approve-btn" data-id="${row.id}" title="Approve">
+                            <i class="fas fa-check"></i>
+                        </button>
                     `;
                 }
             }
@@ -76,8 +83,42 @@ $(document).ready(function () {
             table.ajax.reload(null, false); 
         }, 5000);
     }
+    $(document).on('click', '#itemsApprovalTable .approve-btn', function () {
+        const id = $(this).data('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Are you sure you want to Approve this Item?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Approve',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/nc-inventory-system/admin/items/approve/' + id,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire('Success', response.message, 'success').then(() => {
+                                $('#usersTable').DataTable().ajax.reload();
+                            });
+                        } else {
+                            Swal.fire('Error', response.message, 'error');
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire('Error', 'An unexpected error occurred.', 'error');
+                    }
+                });
+            }
+        });
+    });
 });
 
-
     
-
