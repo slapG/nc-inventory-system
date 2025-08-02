@@ -51,6 +51,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <div class="row mt-5">
+                            <div class="col-md-12 mb-3">
+                                <?= $this->Form->control('description', [
+                                    'class' => 'form-control',
+                                    'id' => 'description',
+                                    'label' => 'Description',
+                                    'type' => 'textarea',
+                                ]); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <?= $this->Form->control('quantity', [

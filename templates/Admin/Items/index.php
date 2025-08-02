@@ -5,76 +5,19 @@
  */
 ?>
 <section class="content-header">
-
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-sm-6 col-md-2">
-            <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-tv"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text"><? h()?></span>
-                    <span class="info-box-number">
-                    <? h()?>
-                    </span>
+        <?php foreach ($groupedItems as $item): ?>
+            <div class="col-12 col-sm-6 col-md-2">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-tv"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?= h($item['item_name']) ?></span>
+                        <span class="info-box-number"><?= h($item['count']) ?></span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-2">
-            <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-keyboard"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text"><? h()?></span>
-                    <span class="info-box-number">
-                    <? h()?>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-2">
-            <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-mouse"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text"><? h()?></span>
-                    <span class="info-box-number">
-                    <? h()?>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-2">
-            <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text"><? h()?></span>
-                    <span class="info-box-number">
-                    <? h()?>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-2">
-            <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-mouse"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text"><? h()?></span>
-                    <span class="info-box-number">
-                    <? h()?>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-2">
-            <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-mouse"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text"><? h()?></span>
-                    <span class="info-box-number">
-                    <? h()?>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 </section>

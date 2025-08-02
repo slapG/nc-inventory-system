@@ -18,7 +18,6 @@ $(document).ready(function () {
                 data: null,
                 title: "Full Name",
                 render: function(data, type, row) {
-                    // Combine and handle possible null/undefined values
                     const fname = row.firstname || '';
                     const mname = row.middlename ? ` ${row.middlename}` : '';
                     const lname = row.lastname || '';

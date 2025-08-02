@@ -88,7 +88,7 @@ class ItemsTable extends Table
         $validator
             ->scalar('description')
             ->requirePresence('description', 'create')
-            ->notEmptyString('description');
+            ->allowEmptyString('description');
             
         $validator
             ->scalar('code')

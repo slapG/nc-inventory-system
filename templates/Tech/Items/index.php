@@ -9,12 +9,13 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1>New Items/Equipmnentnts For Approval</h1>
+                <a href="<?= $this->Url->build(['prefix' => 'Tech', 'controller' => 'Items', 'action' => 'add'])?>">Add Ka Boss?</a>
             </div>
         </div>
     </div>
 </section>
 <section class="content">
-    <div class="container-fluid">
+    <div class="container-fluid">       
         <div class="row">
             <div class="col-12">
                 <div class="card">

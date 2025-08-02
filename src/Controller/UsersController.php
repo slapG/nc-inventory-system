@@ -146,8 +146,8 @@ class UsersController extends AppController
             if ($user->is_staff == 1) {
                 $redirectUrl = Router::url([
                     'prefix' => 'Staff',
-                    'controller' => 'serviceForms',
-                    'action' => 'blank',
+                    'controller' => 'dashboard',
+                    'action' => 'index',
                 ]);
                 return $this->response->withType('application/json')
                     ->withStringBody(json_encode([
@@ -173,8 +173,8 @@ class UsersController extends AppController
             if ($user->is_tech == 1) {
                 $redirectUrl = Router::url([
                     'prefix' => 'Tech',
-                    'controller' => 'serviceForms',
-                    'action' => 'blank',
+                    'controller' => 'dashboard',
+                    'action' => 'index',
                 ]);
                 return $this->response->withType('application/json')
                     ->withStringBody(json_encode([
@@ -183,56 +183,6 @@ class UsersController extends AppController
                         'redirect' => $redirectUrl
                     ]));
             }
-        }
-
-
-    }
-
-    public function loginRedirect()
-    {
-        $this->viewBuilder()->setLayout('login');
-        $this->request->allowMethod(['get', 'post']);
-        $result = $this->Authentication->getResult();
-        if (
-            $result && 
-            $result->isValid() && 
-            $result->getData()->is_active == 1 && 
-            $result->getData()->is_admin == 1 &&
-            $result->getData()->is_staff == 0)
-             {            
-            return $this->response->withType('application/json')
-                ->withStringBody(json_encode([
-                    'status' => 'success',
-                    'message' => 'Welcome to the system!',
-                ]));
-        } else if (
-            $result && 
-            $result->isValid() && 
-            $result->getData()->is_active == 1 && 
-            $result->getData()->is_staff == 1) {
-            $redirect = $this->request->getQuery('redirect', [
-                'prefix' => 'Staff',
-                'controller' => 'serviceForms',
-                'action' => 'index',
-            ]);
-
-            return $this->redirect($redirect);
-        } else if (
-            $result && 
-            $result->isValid() && 
-            $result->getData()->is_active == 1 && 
-            $result->getData()->is_employee == 1) {
-            $redirect = $this->request->getQuery('redirect', [
-                'prefix' => 'Employee',
-                'controller' => 'serviceForms',
-                'action' => 'index',
-            ]);
-
-            return $this->redirect($redirect);
-        }
-        // display error if user submitted and authentication failed
-        if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error(__('Invalid username or password'));
         }
     }
     public function logout()

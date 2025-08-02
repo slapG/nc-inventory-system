@@ -168,7 +168,7 @@ class UsersController extends AppController
                 ->withStringBody(json_encode(['status' => 'error', 'message' => 'Failed to deactivate user']));
         }
         return $this->response;
-    }
+    } 
 
     public function activate($id = null)
     {

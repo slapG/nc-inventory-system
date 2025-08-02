@@ -31,8 +31,29 @@ class ItemsController extends AppController
      */
     public function index()
     {
-        $item = $this->Items->find('all');
-        
+        $items = $this->Items->find()
+            ->contain(['Users', 'Statuses', 'AddedUser', 'ModifiedUser'])
+            ->where(function ($exp, $q) {
+                return $exp
+                    ->eq('Items.is_active', '1')
+                    ->eq('Items.status_id', 2)
+                    ->isNull('Items.user_id');
+            })
+            ->all();
+
+        $grouped = [];
+        foreach ($items as $item) {
+            $name = $item->item_name;
+            if (!isset($grouped[$name])) {
+                $grouped[$name] = [
+                    'item_name' => $name,
+                    'count' => 0,
+                ];
+            }
+            $grouped[$name]['count']++;
+        }
+
+        $this->set('groupedItems', $grouped);
     }
 
     public function approve($id = null)
